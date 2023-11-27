@@ -76,5 +76,8 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "@comunica/query-sparql": "^2.10.0"
   }
 }
