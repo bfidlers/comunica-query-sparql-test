@@ -8,19 +8,24 @@ const myEngine = new QueryEngine();
 export default class ApplicationController extends Controller {
   @tracked output = '';
   @tracked previous_output = '';
+  @tracked ask_result = '';
 
-  async updateOutput(stream) {
+  async updateOutput(value) {
+    this.previous_output = this.output;
+    this.output = value;
+  }
+
+  // select queries
+
+  async updateBindings(stream) {
     let result = '';
     const bindings = await stream.toArray();
     bindings.map((b) => {
       result += b.toString();
     });
 
-    this.previous_output = this.output;
-    this.output = result;
+    this.updateOutput(result);
   }
-
-  // select queries
 
   @action
   async queryAll() {
@@ -37,7 +42,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateOutput(bindingsStream);
+    this.updateBindings(bindingsStream);
   }
 
   @action
@@ -55,7 +60,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateOutput(bindingsStream);
+    this.updateBindings(bindingsStream);
   }
 
   @action
@@ -74,7 +79,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateOutput(bindingsStream);
+    this.updateBindings(bindingsStream);
   }
 
   @action
@@ -94,7 +99,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateOutput(bindingsStream);
+    this.updateBindings(bindingsStream);
   }
 
   @action
@@ -114,7 +119,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateOutput(bindingsStream);
+    this.updateBindings(bindingsStream);
   }
 
   @action
@@ -142,7 +147,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateOutput(bindingsStream);
+    this.updateBindings(bindingsStream);
   }
 
   @action
@@ -168,7 +173,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateOutput(bindingsStream);
+    this.updateBindings(bindingsStream);
   }
 
   @action
@@ -189,7 +194,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateOutput(bindingsStream);
+    this.updateBindings(bindingsStream);
   }
 
   // Construct queries
@@ -207,8 +212,7 @@ export default class ApplicationController extends Controller {
       result += '}\n';
     });
 
-    this.previous_output = this.output;
-    this.output = result;
+    this.updateOutput(result);
   }
 
   @action
@@ -225,5 +229,58 @@ export default class ApplicationController extends Controller {
     );
 
     this.outputQuads(quadStream);
+  }
+
+  @action
+  async askQueryAll() {
+    const hasMatches = await myEngine.queryBoolean(
+      `
+      ASK {
+        ?s ?p ?o
+      }`,
+      {
+        sources: [
+          { type: 'file', value: 'http://localhost:4200/turtle/persons.ttl' },
+        ],
+      },
+    );
+
+    this.ask_result = hasMatches;
+  }
+
+  @action
+  async askQueryTrue() {
+    const hasMatches = await myEngine.queryBoolean(
+      `
+      PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
+      ASK {
+        ?s ext:name "Jimmy"
+      }`,
+      {
+        sources: [
+          { type: 'file', value: 'http://localhost:4200/turtle/persons.ttl' },
+        ],
+      },
+    );
+
+    this.ask_result = hasMatches;
+  }
+
+  @action
+  async askQueryFalse() {
+    const hasMatches = await myEngine.queryBoolean(
+      `
+      PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
+      ASK {
+        ?s ext:name "Walter"
+      }`,
+      {
+        sources: [
+          { type: 'file', value: 'http://localhost:4200/turtle/persons.ttl' },
+        ],
+      },
+    );
+
+    this.ask_result = hasMatches;
   }
 }

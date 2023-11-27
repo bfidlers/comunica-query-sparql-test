@@ -1,5 +1,6 @@
 {{page-title "ComunicaSparqlEmber"}}
 
+<div class="top">
 <h1>Comunica query-sparql test app</h1>
 
 <p>This is a simple test page to try different uses of the comunica query-sparql module in ember.</p>
@@ -20,7 +21,21 @@
 
 <button type="button" {{on "click" this.constructExternalSource}}>Simple construct query to external source</button>
 
+<h2>SPARQL ASK queries</h2>
 
+<div class="left-side">
+  <button type="button" {{on "click" this.askQueryAll}}>Simple general ask query</button>
+  <button type="button" {{on "click" this.askQueryFalse}}>Simple negative ask query</button>
+  <button type="button" {{on "click" this.askQueryTrue}}>Simple positive ask query</button>
+</div>
+
+<div class="right-side">
+  <div class="inline">SPARQL ask query result: </div>
+  <strong class="inline">{{this.ask_result}}</strong>
+</div>
+</div>
+
+<div class="bottom">
 <div class="left-side">
   <h2>Output</h2>
   <pre>{{this.output}}</pre>
@@ -29,6 +44,7 @@
 <div class="right-side">
   <h2>Previous output</h2>
   <pre>{{this.previous_output}}</pre>
+</div>
 </div>
 
 

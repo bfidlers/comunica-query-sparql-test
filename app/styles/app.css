@@ -7,9 +7,21 @@
 
 .right-side {
   width: 50%;
-  float: left;
+  float: right;
 }
 
 pre {
   white-space: pre-wrap;
+}
+
+.inline {
+  display: inline-flex;
+}
+
+.top {
+  height: 400px;
+}
+
+.bottom {
+  height: 50%;
 }
