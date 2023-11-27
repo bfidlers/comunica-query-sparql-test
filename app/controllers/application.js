@@ -20,6 +20,8 @@ export default class ApplicationController extends Controller {
     this.output = result;
   }
 
+  // select queries
+
   @action
   async queryAll() {
     const bindingsStream = await myEngine.queryBindings(
@@ -188,5 +190,40 @@ export default class ApplicationController extends Controller {
     );
 
     this.updateOutput(bindingsStream);
+  }
+
+  // Construct queries
+
+  async outputQuads(stream) {
+
+    let result = '';
+    const bindings = await stream.toArray();
+    bindings.map((quad) => {
+      result += '{\n';
+      result += 's:' + quad.subject.value + '\n';
+      result += 'p:' + quad.predicate.value + '\n';
+      result += 'o:' + quad.object.value + '\n';
+      result += 'g:' + quad.graph.value + '\n';
+      result += '}\n';
+    });
+
+    this.previous_output = this.output;
+    this.output = result;
+  }
+
+  @action
+  async constructExternalSource() {
+    const quadStream = await myEngine.queryQuads(
+      `
+      CONSTRUCT WHERE {
+        ?s ?p ?o
+      }
+      LIMIT 10`,
+      {
+        sources: ['http://fragments.dbpedia.org/2015/en'],
+      },
+    );
+
+    this.outputQuads(quadStream);
   }
 }

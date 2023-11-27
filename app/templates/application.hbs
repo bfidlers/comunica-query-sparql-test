@@ -5,7 +5,7 @@
 <p>This is a simple test page to try different uses of the comunica query-sparql module in ember.</p>
 <p>Below you can find different functionalities to test.</p>
 
-<h2>Simple queries</h2>
+<h2>SPARQL SELECT queries</h2>
 
 <button type="button" {{on "click" this.queryAll}}>Simple query to file</button>
 <button type="button" {{on "click" this.queryLimit}}>Simple query to file with limit</button>
@@ -15,6 +15,11 @@
 <button type="button" {{on "click" this.queryNested}}>Simple nested query to file</button>
 <button type="button" {{on "click" this.queryBind}}>Simple query to file with binds</button>
 <button type="button" {{on "click" this.queryValues}}>Simple query to file with values</button>
+
+<h2>SPARQL CONSTRUCT queries</h2>
+
+<button type="button" {{on "click" this.constructExternalSource}}>Simple construct query to external source</button>
+
 
 <div class="left-side">
   <h2>Output</h2>
