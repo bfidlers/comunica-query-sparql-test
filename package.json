@@ -78,6 +78,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@comunica/query-sparql": "^2.10.0"
+    "@comunica/query-sparql": "^2.10.0",
+    "n3": "^1.17.2"
   }
 }

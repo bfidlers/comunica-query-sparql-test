@@ -2,8 +2,10 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { QueryEngine } from '@comunica/query-sparql';
+import N3 from 'n3';
 
 const myEngine = new QueryEngine();
+const store = new N3.Store();
 
 export default class ApplicationController extends Controller {
   @tracked output = '';
@@ -17,7 +19,7 @@ export default class ApplicationController extends Controller {
 
   // select queries
 
-  async updateBindings(stream) {
+  async outputBindings(stream) {
     let result = '';
     const bindings = await stream.toArray();
     bindings.map((b) => {
@@ -42,7 +44,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateBindings(bindingsStream);
+    this.outputBindings(bindingsStream);
   }
 
   @action
@@ -60,7 +62,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateBindings(bindingsStream);
+    this.outputBindings(bindingsStream);
   }
 
   @action
@@ -79,7 +81,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateBindings(bindingsStream);
+    this.outputBindings(bindingsStream);
   }
 
   @action
@@ -99,7 +101,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateBindings(bindingsStream);
+    this.outputBindings(bindingsStream);
   }
 
   @action
@@ -119,7 +121,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateBindings(bindingsStream);
+    this.outputBindings(bindingsStream);
   }
 
   @action
@@ -147,7 +149,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateBindings(bindingsStream);
+    this.outputBindings(bindingsStream);
   }
 
   @action
@@ -173,7 +175,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateBindings(bindingsStream);
+    this.outputBindings(bindingsStream);
   }
 
   @action
@@ -194,13 +196,12 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    this.updateBindings(bindingsStream);
+    this.outputBindings(bindingsStream);
   }
 
   // Construct queries
 
   async outputQuads(stream) {
-
     let result = '';
     const bindings = await stream.toArray();
     bindings.map((quad) => {
@@ -230,6 +231,8 @@ export default class ApplicationController extends Controller {
 
     this.outputQuads(quadStream);
   }
+
+  // Ask queries
 
   @action
   async askQueryAll() {
@@ -283,4 +286,105 @@ export default class ApplicationController extends Controller {
 
     this.ask_result = hasMatches;
   }
+
+  // Queries with store
+
+  @action
+  async queryStore() {
+    const bindingsStream = await myEngine.queryBindings(
+      `
+      SELECT ?s ?p ?o WHERE {
+        ?s ?p ?o.
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    this.outputBindings(bindingsStream);
+  }
+
+  @action
+  async insertStore() {
+    await myEngine.queryVoid(
+      `
+      PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+      INSERT DATA
+      {
+        <http://example/president25> foaf:givenName "Bill" .
+        <http://example/president25> foaf:familyName "McKinley" .
+        <http://example/president27> foaf:givenName "Bill" .
+        <http://example/president27> foaf:familyName "Taft" .
+        <http://example/president42> foaf:givenName "Bill" .
+        <http://example/president42> foaf:familyName "Clinton" .
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    console.log(store.size);
+  }
+
+  // Doesn't seem to work.
+  @action
+  async deleteStore() {
+    await myEngine.queryVoid(
+      `
+      PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+      DELETE { ?person foaf:familyName 'Taft' }
+      WHERE
+      {
+        ?person foaf:familyName 'Taft'
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    console.log(store.size);
+  }
+
+  @action
+  async deleteInsertStore() {
+    await myEngine.queryVoid(
+      `
+      PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+      DELETE { ?person foaf:givenName 'Bill' }
+      INSERT { ?person foaf:givenName 'William' }
+      WHERE
+      {
+        ?person foaf:givenName 'Bill'
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    console.log(store.size);
+  }
+
+  @action
+  async clearStore() {
+    await myEngine.queryVoid(
+      `
+      DELETE { ?s ?p ?o }
+      WHERE
+      {
+        ?s ?p ?o
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    console.log(store.size);
+  }
+
+
 }
