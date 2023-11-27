@@ -80,5 +80,9 @@
   },
   "dependencies": {
     "@comunica/query-sparql-file": "^2.10.0"
+  },
+  "overrides": {
+    "@babel/preset-env": "7.23.3",
+    "@babel/helper-create-class-features-plugin": "7.14.6"
   }
 }
