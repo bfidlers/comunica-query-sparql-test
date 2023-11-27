@@ -4,7 +4,7 @@ import { QueryEngine } from '@comunica/query-sparql';
 
 export default class ApplicationController extends Controller {
   @action
-  async getData() {
+  async queryAll() {
     const myEngine = new QueryEngine();
 
     const bindingsStream = await myEngine.queryBindings(
@@ -18,9 +18,8 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    // Consume results as a stream (best performance)
     bindingsStream.on('data', (binding) => {
-      console.log(binding.toString()); // Quick way to print bindings for testing
+      console.log(binding.toString());
     });
   }
 }
