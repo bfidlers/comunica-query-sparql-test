@@ -16,4 +16,15 @@
 <button type="button" {{on "click" this.queryBind}}>Simple query to file with binds</button>
 <button type="button" {{on "click" this.queryValues}}>Simple query to file with values</button>
 
+<div class="left-side">
+  <h2>Output</h2>
+  <pre>{{this.output}}</pre>
+</div>
+
+<div class="right-side">
+  <h2>Previous output</h2>
+  <pre>{{this.previous_output}}</pre>
+</div>
+
+
 {{outlet}}

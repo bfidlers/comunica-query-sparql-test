@@ -1,10 +1,25 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { QueryEngine } from '@comunica/query-sparql';
 
 const myEngine = new QueryEngine();
 
 export default class ApplicationController extends Controller {
+  @tracked output = '';
+  @tracked previous_output = '';
+
+  async updateOutput(stream) {
+    let result = '';
+    const bindings = await stream.toArray();
+    bindings.map((b) => {
+      result += b.toString();
+    });
+
+    this.previous_output = this.output;
+    this.output = result;
+  }
+
   @action
   async queryAll() {
     const bindingsStream = await myEngine.queryBindings(
@@ -20,9 +35,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    bindingsStream.on('data', (binding) => {
-      console.log(binding.toString());
-    });
+    this.updateOutput(bindingsStream);
   }
 
   @action
@@ -40,9 +53,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    bindingsStream.on('data', (binding) => {
-      console.log(binding.toString());
-    });
+    this.updateOutput(bindingsStream);
   }
 
   @action
@@ -61,9 +72,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    bindingsStream.on('data', (binding) => {
-      console.log(binding.toString());
-    });
+    this.updateOutput(bindingsStream);
   }
 
   @action
@@ -83,9 +92,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    bindingsStream.on('data', (binding) => {
-      console.log(binding.toString());
-    });
+    this.updateOutput(bindingsStream);
   }
 
   @action
@@ -105,9 +112,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    bindingsStream.on('data', (binding) => {
-      console.log(binding.toString());
-    });
+    this.updateOutput(bindingsStream);
   }
 
   @action
@@ -135,9 +140,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    bindingsStream.on('data', (binding) => {
-      console.log(binding.toString());
-    });
+    this.updateOutput(bindingsStream);
   }
 
   @action
@@ -163,9 +166,7 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    bindingsStream.on('data', (binding) => {
-      console.log(binding.toString());
-    });
+    this.updateOutput(bindingsStream);
   }
 
   @action
@@ -186,8 +187,6 @@ export default class ApplicationController extends Controller {
       },
     );
 
-    bindingsStream.on('data', (binding) => {
-      console.log(binding.toString());
-    });
+    this.updateOutput(bindingsStream);
   }
 }

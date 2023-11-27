@@ -1,1 +1,15 @@
 /* Ember supports plain CSS out of the box. More info: https://cli.emberjs.com/release/advanced-use/stylesheets/ */
+
+.left-side {
+  width: 50%;
+  float: left;
+}
+
+.right-side {
+  width: 50%;
+  float: left;
+}
+
+pre {
+  white-space: pre-wrap;
+}
