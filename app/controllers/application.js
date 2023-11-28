@@ -35,8 +35,7 @@ export default class ApplicationController extends Controller {
       `
       SELECT ?s ?p ?o WHERE {
         ?s ?p ?o.
-      }
-      LIMIT 10`,
+      }`,
       {
         sources: [
           { type: 'file', value: 'http://localhost:4200/turtle/data.ttl' },
