@@ -43,6 +43,15 @@
 <button type="button" {{on "click" this.deleteStore}}>Delete data from store</button>
 <button type="button" {{on "click" this.deleteInsertStore}}>Delete/Insert data in store</button>
 <button type="button" {{on "click" this.clearStore}}>Clear data from store</button>
+
+<h2>SPARQL GRAPH querying</h2>
+
+<button type="button" {{on "click" this.queryStore}}>Query all data from store from default graph</button>
+<button type="button" {{on "click" this.querySpecifiedGraph}}>Query all data from store from specified graph</button>
+<button type="button" {{on "click" this.insertSpecifiedGraph}}>Insert data in store in specified graph</button>
+<button type="button" {{on "click" this.deleteSpecifiedGraph}}>Delete data from store from specified graph</button>
+<button type="button" {{on "click" this.deleteInsertSpecifiedGraphAlt}}>Delete/Insert data in store in specified graph</button>
+<button type="button" {{on "click" this.clearSpecifiedGraph}}>Clear data from store from specified graph</button>
 </div>
 
 <div class="bottom">

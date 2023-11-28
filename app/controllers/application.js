@@ -328,7 +328,6 @@ export default class ApplicationController extends Controller {
     console.log(store.size);
   }
 
-  // Doesn't seem to work.
   @action
   async deleteStore() {
     await myEngine.queryVoid(
@@ -386,5 +385,138 @@ export default class ApplicationController extends Controller {
     console.log(store.size);
   }
 
+  // Graph queries with store
 
+  @action
+  async querySpecifiedGraph() {
+    const bindingsStream = await myEngine.queryBindings(
+      `
+      SELECT ?s ?p ?o WHERE {
+        GRAPH <http://example/books>
+        {
+          ?s ?p ?o.
+        }
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    this.outputBindings(bindingsStream);
+  }
+
+  @action
+  async insertSpecifiedGraph() {
+    await myEngine.queryVoid(
+      `
+      PREFIX dc: <http://purl.org/dc/elements/1.1/>
+      INSERT DATA
+      {
+        GRAPH <http://example/books>
+        {
+          <http://example/book1> dc:title "Frankenstein" ;
+                                 dc:author "Mary Shelley" .
+          <http://example/book2> dc:title "Crime and Punishment" ;
+                                 dc:author "Fyodor Dostoevsky" .
+          <http://example/book3> dc:title "The hobbit" ;
+                                 dc:author "J. R. R. Tolkien" .
+        }
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    console.log(store.size);
+  }
+
+  @action
+  async deleteSpecifiedGraph() {
+    await myEngine.queryVoid(
+      `
+      PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+      WITH <http://example/books>
+      DELETE { ?book ?p ?o }
+      WHERE
+      {
+        ?book ?p ?o;
+              ?p2 'Crime and Punishment'.
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    console.log(store.size);
+  }
+
+  @action
+  async deleteInsertSpecifiedGraph() {
+    await myEngine.queryVoid(
+      `
+      PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+      PREFIX dc: <http://purl.org/dc/elements/1.1/>
+      DELETE { GRAPH <http://example/books> { ?book dc:title ?title } }
+      INSERT { GRAPH <http://example/books> { ?book dc:title 'The Lord of the Rings' } }
+      WHERE
+      {
+        GRAPH <http://example/books>
+        {
+          ?book ?p 'J. R. R. Tolkien';
+          dc:title ?title.
+        }
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    console.log(store.size);
+  }
+
+  @action
+  async deleteInsertSpecifiedGraphAlt() {
+    await myEngine.queryVoid(
+      `
+      PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+      PREFIX dc: <http://purl.org/dc/elements/1.1/>
+      WITH <http://example/books>
+      DELETE { ?book dc:title ?title }
+      INSERT { ?book dc:title 'The Lord of the Rings' }
+      WHERE
+      {
+        ?book ?p 'J. R. R. Tolkien';
+        dc:title ?title.
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    console.log(store.size);
+  }
+
+  @action
+  async clearSpecifiedGraph() {
+    await myEngine.queryVoid(
+      `
+      WITH <http://example/books>
+      DELETE { ?s ?p ?o }
+      WHERE
+      {
+        ?s ?p ?o
+      }
+      `,
+      {
+        sources: [store],
+      },
+    );
+
+    console.log(store.size);
+  }
 }

@@ -17,11 +17,3 @@ pre {
 .inline {
   display: inline-flex;
 }
-
-.top {
-  height: 500px;
-}
-
-.bottom {
-  height: 50%;
-}
