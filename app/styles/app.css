@@ -1,4 +1,25 @@
-/* Ember supports plain CSS out of the box. More info: https://cli.emberjs.com/release/advanced-use/stylesheets/ */
+/**
+ * Top Navigation
+ */
+
+.menu {
+  position: relative;
+}
+
+.menu h1 {
+  position: relative;
+  padding: 5px 0;
+}
+
+.menu a {
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/**
+* Other stuff
+*/
 
 .left-side {
   width: 50%;

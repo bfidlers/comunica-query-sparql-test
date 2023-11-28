@@ -7,7 +7,7 @@ import N3 from 'n3';
 const myEngine = new QueryEngine();
 const store = new N3.Store();
 
-export default class ApplicationController extends Controller {
+export default class IndexController extends Controller {
   @tracked output = '';
   @tracked previous_output = '';
   @tracked ask_result = '';

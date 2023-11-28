@@ -1,75 +1,8 @@
 {{page-title "ComunicaSparqlEmber"}}
 
-<div class="top">
-<h1>Comunica query-sparql test app</h1>
+<NavBar/>
 
 <p>This is a simple test page to try different uses of the comunica query-sparql module in ember.</p>
 <p>Below you can find different functionalities to test.</p>
-
-<h2>SPARQL SELECT queries</h2>
-
-<button type="button" {{on "click" this.queryAll}}>Simple query to file</button>
-<button type="button" {{on "click" this.queryLimit}}>Simple query to file with limit</button>
-<button type="button" {{on "click" this.queryOrdered}}>Simple query to file with order</button>
-<button type="button" {{on "click" this.queryOffset}}>Simple query to file with offset</button>
-<button type="button" {{on "click" this.queryGroupAggregate}}>Simple query to file with group aggregates</button>
-<button type="button" {{on "click" this.queryNested}}>Simple nested query to file</button>
-<button type="button" {{on "click" this.queryBind}}>Simple query to file with binds</button>
-<button type="button" {{on "click" this.queryValues}}>Simple query to file with values</button>
-
-<h2>SPARQL CONSTRUCT queries</h2>
-
-<button type="button" {{on "click" this.constructExternalSource}}>Simple construct query to external source</button>
-
-<h2>SPARQL ASK queries</h2>
-
-<div class="left-side">
-  <button type="button" {{on "click" this.askQueryAll}}>Simple general ask query</button>
-  <button type="button" {{on "click" this.askQueryFalse}}>Simple negative ask query</button>
-  <button type="button" {{on "click" this.askQueryTrue}}>Simple positive ask query</button>
-</div>
-
-<div class="right-side">
-  <div class="inline">SPARQL ask query result: </div>
-  <strong class="inline">{{this.ask_result}}</strong>
-</div>
-
-<br>
-
-<h2>SPARQL INSERT queries</h2>
-
-<button type="button" {{on "click" this.queryStore}}>Query all data from store</button>
-<button type="button" {{on "click" this.insertStore}}>Insert data in store</button>
-<button type="button" {{on "click" this.deleteStore}}>Delete data from store</button>
-<button type="button" {{on "click" this.deleteInsertStore}}>Delete/Insert data in store</button>
-<button type="button" {{on "click" this.loadIntoStore}}>Load data into store from file</button>
-<button type="button" {{on "click" this.clearStore}}>Clear data from store</button>
-
-<h2>SPARQL GRAPH querying</h2>
-
-<button type="button" {{on "click" this.queryStore}}>Query all data from store from default graph</button>
-<button type="button" {{on "click" this.querySpecifiedGraph}}>Query all data from store from specified graph</button>
-<button type="button" {{on "click" this.insertSpecifiedGraph}}>Insert data in store in specified graph</button>
-<button type="button" {{on "click" this.deleteSpecifiedGraph}}>Delete data from store from specified graph</button>
-<button type="button" {{on "click" this.deleteInsertSpecifiedGraphAlt}}>Delete/Insert data in store in specified graph</button>
-<button type="button" {{on "click" this.clearSpecifiedGraph}}>Clear data from store from specified graph</button>
-
-<h2>Property paths</h2>
-
-<button type="button" {{on "click" this.queryPathSequence}}>Query sequence path</button>
-</div>
-
-<div class="bottom">
-<div class="left-side">
-  <h2>Output</h2>
-  <pre>{{this.output}}</pre>
-</div>
-
-<div class="right-side">
-  <h2>Previous output</h2>
-  <pre>{{this.previous_output}}</pre>
-</div>
-</div>
-
 
 {{outlet}}
