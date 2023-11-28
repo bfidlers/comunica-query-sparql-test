@@ -368,6 +368,25 @@ export default class ApplicationController extends Controller {
   }
 
   @action
+  async loadIntoStore() {
+    await myEngine.queryVoid(
+      `
+      PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+      INSERT
+        { ?s ?p ?o }
+      WHERE
+        { ?s ?p ?o }
+      `,
+      {
+        sources: ['http://localhost:4200/turtle/persons.ttl'],
+        destination: store,
+      },
+    );
+
+    console.log(store.size);
+  }
+
+  @action
   async clearStore() {
     await myEngine.queryVoid(
       `
@@ -384,7 +403,6 @@ export default class ApplicationController extends Controller {
 
     console.log(store.size);
   }
-
   // Graph queries with store
 
   @action
