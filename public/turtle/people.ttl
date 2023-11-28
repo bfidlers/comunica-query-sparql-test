@@ -1,0 +1,11 @@
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+ext:person1 foaf:name "Alice";
+            foaf:knows ext:person2 .
+
+ext:person2 foaf:name "Bob";
+            foaf:knows ext:person3 .
+
+ext:person3 foaf:name "Charlie";
+            foaf:knows ext:person1 .

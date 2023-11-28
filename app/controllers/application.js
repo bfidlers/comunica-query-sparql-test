@@ -537,4 +537,26 @@ export default class ApplicationController extends Controller {
 
     console.log(store.size);
   }
+
+  // property paths
+
+  @action
+  async queryPathSequence() {
+    const bindingsStream = await myEngine.queryBindings(
+      `
+      SELECT ?name WHERE
+      {
+        ?x foaf:name 'Alice' .
+        ?x foaf:knows/foaf:name ?name .
+       }
+      LIMIT 10`,
+      {
+        sources: [
+          { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
+        ],
+      },
+    );
+
+    this.outputBindings(bindingsStream);
+  }
 }
