@@ -1,0 +1,19 @@
+{{page-title "Custom Query"}}
+
+<h2>Query</h2>
+
+<form {{on "submit" this.executeQuery}}>
+  <label for="custom-query">Query to execute:</label>
+  <br>
+  <Textarea
+    id="custom-query"
+    @value={{this.custom_query}}
+  />
+  <br>
+  <button type="submit">Execute query</button>
+</form>
+
+
+<Output @output={{this.output}} @previous_output={{this.previous_output}}/>
+
+{{outlet}}
