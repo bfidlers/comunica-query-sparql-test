@@ -52,6 +52,10 @@
 <button type="button" {{on "click" this.queryPathSequence}}>Query sequence path</button>
 </div>
 
+<h2>Last executed query</h2>
+
+<pre>{{this.last_query}}</pre>
+
 <Output @output={{this.output}} @previous_output={{this.previous_output}}/>
 
 {{outlet}}
