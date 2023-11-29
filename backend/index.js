@@ -1,4 +1,6 @@
-const express = require('express')
+const express = require('express');
+const fs = require('fs');
+
 const app = express()
 const port = 3000
 
@@ -10,12 +12,56 @@ app.use((req, res, next) => {
 });
 app.use(express.static('public'))
 
-
-
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+    res.send('Hello World!');
+})
+
+// Example read from json file
+app.get('/read', (req, res) => {
+    fs.readFile('public/turtle/files.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error while reading the file:', err);
+            return;
+        }
+        try {
+            const parsed = JSON.parse(data);
+            res.send(parsed);
+        } catch (err) {
+            console.error('Error while parsing JSON data:', err);
+        }
+    })
+})
+
+// Example write to json file
+app.get('/write', (req, res, next) => {
+    fs.readFile('public/turtle/files.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error while reading the file:', err);
+            res.send(err);
+            return;
+        }
+        try {
+            let parsed = JSON.parse(data);
+
+            parsed.fileNames.push('test.ttl');
+
+            let json = JSON.stringify(parsed);
+            fs.writeFile('public/turtle/files.json', json, 'utf8', (err, data) => {
+                if (err) {
+                    console.error('Error while writing to file:', err);
+                    res.send(err);
+                }
+                res.send('Writing to file was succesfull!');
+                ;
+            } )
+
+        } catch (err) {
+            console.error('Error while parsing JSON data:', err);
+            res.send(err);
+        }
+    })
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`);
 })
