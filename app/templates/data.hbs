@@ -1,0 +1,16 @@
+{{page-title "Data"}}
+
+<div>At this moment {{@model.fileNames.length}} turtle files can be used to query on:</div>
+
+{{#each @model.fileNames as |fileName|}}
+<button type="button" {{on "click" (fn this.setData fileName)}} >{{fileName}}</button>
+{{/each}}
+
+{{#if this.data}}
+
+<div>The file {{this.fileName}} contains the following:</div>
+
+<pre>{{this.data}}</pre>
+
+{{/if}}
+
