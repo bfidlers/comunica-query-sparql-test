@@ -1,8 +1,12 @@
 const express = require('express');
 const fs = require('fs');
+const bodyParser = require('body-parser')
 
 const app = express()
 const port = 3000
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -60,6 +64,15 @@ app.get('/write', (req, res, next) => {
             res.send(err);
         }
     })
+})
+
+app.post('/upload', (req, res) => {
+    let body = req.body;
+    let data = body.data.split(',')[1];
+    let result = atob(data);
+    console.log(body.name);
+    console.log(result);
+    res.send('Data Received succesfully');
 })
 
 app.listen(port, () => {

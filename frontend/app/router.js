@@ -9,4 +9,5 @@ export default class Router extends EmberRouter {
 Router.map(function () {
   this.route('custom-query');
   this.route('data');
+  this.route('upload');
 });
