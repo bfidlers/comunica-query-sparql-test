@@ -46,6 +46,6 @@ pre {
 }
 
 textarea {
-  width: calc(100vw - 30px);
-  height: calc(100vh - 150px);
+  width: calc(99vw);
+  height: calc(40vh);
 }

@@ -1,5 +1,10 @@
 {{page-title "Custom Query"}}
 
+<p>Here you can test your own queries. {{@model.length}} turtle files can be used, the contents of these files can be found <LinkTo @route="data">here</LinkTo>.</p>
+<p>When using the turtle files, you can make use of the following query options: SELECT, CONSTRUCT, DESCRIBE and ASK.</p>
+<p>If you want to update or delete entries, you need to use the in memory store. By default the in memory store is always used as a destination.</p>
+<p>This means that you can query content from a source and write to a destination. If however you want to query the in memory store, you need to check the checkbox below the query window.</p>
+
 <h2>Query</h2>
 
 <form {{on "submit" this.executeQuery}}>
