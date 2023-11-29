@@ -2,10 +2,22 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
 ext:person1 foaf:name "Alice";
-            foaf:knows ext:person2 .
+            foaf:knows ext:person2 ;
+            foaf:mightKnow ext:person3 .
 
 ext:person2 foaf:name "Bob";
-            foaf:knows ext:person3 .
+            foaf:knows ext:person3 ;
+            foaf:knows ext:person4 ;
+            foaf:knows ext:person1 .
 
 ext:person3 foaf:name "Charlie";
+            foaf:knows ext:person1 .
+
+ext:person4 foaf:name "David";
+            foaf:knows ext:person5 .
+
+ext:person5 foaf:name "Eve";
+            foaf:knows ext:person6 .
+
+ext:person6 foaf:name "Figaro";
             foaf:knows ext:person1 .

@@ -54,6 +54,13 @@
 <h2>Property paths</h2>
 
 <button type="button" {{on "click" this.queryPathSequence}}>Query sequence path</button>
+<button type="button" {{on "click" this.queryPathLongSequence}}>Query longer sequence path</button>
+<button type="button" {{on "click" this.queryPathLongSequenceNoDuplicates}}>Query longer sequence path with filter</button>
+<button type="button" {{on "click" this.inversePathSequence}}>Inverse path sequence</button>
+<button type="button" {{on "click" this.inversePropertyPath}}>Inverse property path</button>
+<button type="button" {{on "click" this.queryPathSequencePlus}}>A path of one or more occurrences</button>
+<button type="button" {{on "click" this.queryPathSequenceNM}}>A path between n and m occurrences</button>
+<button type="button" {{on "click" this.queryAlternativePath}}>A path between two alternatives</button>
 </div>
 
 <h2>Last executed query</h2>

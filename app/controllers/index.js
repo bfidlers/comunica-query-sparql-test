@@ -509,4 +509,137 @@ export default class IndexController extends Controller {
 
     this.outputBindings(bindingsStream);
   }
+
+  @action
+  async queryPathLongSequence() {
+    this.last_query = `
+    SELECT ?name WHERE
+    {
+      ?x foaf:name 'Alice' .
+      ?x foaf:knows/foaf:knows/foaf:name ?name .
+    }
+    LIMIT 10`;
+    const bindingsStream = await myEngine.queryBindings(this.last_query, {
+      sources: [
+        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
+      ],
+    });
+
+    this.outputBindings(bindingsStream);
+  }
+
+  @action
+  async queryPathLongSequenceNoDuplicates() {
+    this.last_query = `
+    SELECT ?name WHERE
+    {
+      ?x foaf:name 'Alice' .
+      ?x foaf:knows/foaf:knows/foaf:name ?name .
+      FILTER ( ?x != ?y )
+      ?y foaf:name ?name
+    }
+    LIMIT 10`;
+    const bindingsStream = await myEngine.queryBindings(this.last_query, {
+      sources: [
+        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
+      ],
+    });
+
+    this.outputBindings(bindingsStream);
+  }
+
+  // Does not work.
+  @action
+  async inversePathSequence() {
+    this.last_query = `
+    SELECT ?name WHERE
+    {
+      ?x foaf:knows/^foaf:knows ?y .
+      FILTER(?x != ?y)
+      ?y foaf:name ?name
+    }
+    LIMIT 10`;
+    const bindingsStream = await myEngine.queryBindings(this.last_query, {
+      sources: [
+        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
+      ],
+    });
+
+    this.outputBindings(bindingsStream);
+  }
+
+  @action
+  async inversePropertyPath() {
+    this.last_query = `
+    SELECT ?x WHERE
+    {
+      ?x foaf:name 'Alice' .
+    }
+    LIMIT 10`;
+    const bindingsStream = await myEngine.queryBindings(this.last_query, {
+      sources: [
+        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
+      ],
+    });
+    this.outputBindings(bindingsStream);
+  }
+
+  @action
+  async queryPathSequencePlus() {
+    this.last_query = `
+    SELECT ?name WHERE
+    {
+      ?x foaf:name 'Alice' .
+      ?x (foaf:knows+)/foaf:name ?name .
+      FILTER ( ?x != ?y )
+      ?y foaf:name ?name
+    }
+    LIMIT 10`;
+    const bindingsStream = await myEngine.queryBindings(this.last_query, {
+      sources: [
+        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
+      ],
+    });
+
+    this.outputBindings(bindingsStream);
+  }
+
+  // Does not work.
+  @action
+  async queryPathSequenceNM() {
+    this.last_query = `
+    SELECT ?name WHERE
+    {
+      ?x foaf:name 'Alice' .
+      ?x foaf:knows{3,4} /foaf:name ?name .
+      FILTER ( ?x != ?y )
+      ?y foaf:name ?name
+    }
+    LIMIT 10`;
+    const bindingsStream = await myEngine.queryBindings(this.last_query, {
+      sources: [
+        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
+      ],
+    });
+
+    this.outputBindings(bindingsStream);
+  }
+
+  // Does not work.
+  @action
+  async queryAlternativePath() {
+    this.last_query = `
+    SELECT ?name WHERE
+    {
+      ?x foaf:name 'Alice' .
+      ?x (foaf:knows|foaf:mightKnow)/foaf:name ?name .
+    }
+    LIMIT 10`;
+    const bindingsStream = await myEngine.queryBindings(this.last_query, {
+      sources: [
+        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
+      ],
+    });
+    this.outputBindings(bindingsStream);
+  }
 }
