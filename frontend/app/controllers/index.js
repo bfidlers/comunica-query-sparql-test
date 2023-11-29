@@ -38,7 +38,8 @@ export default class IndexController extends Controller {
     }`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
       sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/data.ttl' },
+        // { type: 'file', value: 'http://localhost:4200/turtle/data.ttl' },
+        { type: 'file', value: 'http://localhost:3000/turtle/data.ttl' },
       ],
     });
 
