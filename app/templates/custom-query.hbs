@@ -9,6 +9,9 @@
     id="custom-query"
     @value={{this.custom_query}}
   />
+  <label for="source">Source to query from:</label>
+  <DropDown @id="source" @default={{this.source}} @options={{@model}}
+    @callback={{this.setSource}} />
   <br>
   <button type="submit">Execute query</button>
 </form>

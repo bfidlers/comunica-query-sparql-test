@@ -14,6 +14,7 @@ export default class CustomQueryController extends Controller {
   SELECT ?s ?p ?o WHERE {
     ?s ?p ?o.
   }`;
+  @tracked source = 'data.ttl';
 
   async updateOutput(value) {
     this.previous_output = this.output;
@@ -25,9 +26,8 @@ export default class CustomQueryController extends Controller {
     event.preventDefault();
 
     const result = await myEngine.query(this.custom_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/data.ttl' },
-      ],
+      sources: ['http://localhost:4200/turtle/' + this.source],
+      destination: store,
     });
 
     const stream = await result.execute();
@@ -63,5 +63,10 @@ export default class CustomQueryController extends Controller {
           `Data was successfully written, store size is now: ${store.size}`,
         );
     }
+  }
+
+  @action
+  setSource(source) {
+    this.source = source;
   }
 }
