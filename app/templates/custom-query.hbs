@@ -10,8 +10,11 @@
     @value={{this.custom_query}}
   />
   <label for="source">Source to query from:</label>
-  <DropDown @id="source" @default={{this.source}} @options={{@model}}
+  <DropDown id="source" @default={{this.source}} @options={{@model}}
     @callback={{this.setSource}} />
+
+  <label for="store-as-source">Use in memory store instead</label>
+  <Input id="store-as-source" @type="checkbox" @checked={{this.sourceStore}} />
   <br>
   <button type="submit">Execute query</button>
 </form>

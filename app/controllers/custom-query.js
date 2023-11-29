@@ -15,6 +15,7 @@ export default class CustomQueryController extends Controller {
     ?s ?p ?o.
   }`;
   @tracked source = 'data.ttl';
+  @tracked sourceStore = false;
 
   async updateOutput(value) {
     this.previous_output = this.output;
@@ -25,8 +26,10 @@ export default class CustomQueryController extends Controller {
   async executeQuery(event) {
     event.preventDefault();
 
+    let source = this.sourceStore ? store : 'http://localhost:4200/turtle/' + this.source;
+
     const result = await myEngine.query(this.custom_query, {
-      sources: ['http://localhost:4200/turtle/' + this.source],
+      sources: [source],
       destination: store,
     });
 
