@@ -86,6 +86,16 @@ app.post('/upload2', (req, res) => {
     res.send('Data received succesfully again');
 })
 
+app.get('/files', (req, res) => {
+    fs.readdir('public/turtle', (err, response) => {
+        if (err) {
+            return console.log('Unable to scan directory: ' + err);
+        }
+        let data = {fileNames: response};
+        res.send(data);
+    })
+})
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 })
