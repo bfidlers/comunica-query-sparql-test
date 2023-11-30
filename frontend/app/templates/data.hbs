@@ -2,11 +2,15 @@
 
 <p>Here you can inspect the contents of the available turtle files.</p>
 
-<div>At this moment {{@model.fileNames.length}} turtle files can be used to query on:</div>
+<p>At this moment {{@model.fileNames.length}} turtle files can be used to query on:</p>
 
 {{#each @model.fileNames as |fileName|}}
 <button type="button" {{on "click" (fn this.setData fileName)}} >{{fileName}}</button>
 {{/each}}
+
+<p>You can also add custom turtle files <LinkTo @route="upload">here.</LinkTo></p>
+
+<br>
 
 {{#if this.data}}
 
