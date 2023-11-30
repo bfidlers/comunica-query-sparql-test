@@ -70,9 +70,15 @@ app.post('/upload', (req, res) => {
     let body = req.body;
     let data = body.data.split(',')[1];
     let result = atob(data);
-    console.log(body.name);
-    console.log(result);
-    res.send('Data received succesfully');
+
+    fs.writeFile('public/turtle/' + body.name, result, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error while writing to file:', err);
+            res.send(err);
+        }
+        res.send('Data written succesfully');
+        ;
+    } )
 })
 
 app.post('/upload2', (req, res) => {
