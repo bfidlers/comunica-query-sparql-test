@@ -72,7 +72,12 @@ app.post('/upload', (req, res) => {
     let result = atob(data);
     console.log(body.name);
     console.log(result);
-    res.send('Data Received succesfully');
+    res.send('Data received succesfully');
+})
+
+app.post('/upload2', (req, res) => {
+    // Do nothing really ...
+    res.send('Data received succesfully again');
 })
 
 app.listen(port, () => {

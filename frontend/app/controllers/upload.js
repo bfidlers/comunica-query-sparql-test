@@ -15,5 +15,12 @@ export default class ExampleController extends Controller {
       },
       body: JSON.stringify(json),
     });
+
+    // Shouldn't really be necessary but deleting from queue is not working
+    try {
+      const response = await file.upload('http://localhost:3000/upload2');
+    } catch (err) {
+      console.error(`File upload failed: ${err}`);
+    }
   }
 }
