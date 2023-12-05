@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 
 export default class ExampleController extends Controller {
   @action
-  async uploadPhoto(file) {
+  async uploadFile(file) {
     const data = await file.readAsDataURL();
 
     let json = {name: file.file.name, data: data};
