@@ -26,7 +26,7 @@ export default class CustomQueryController extends Controller {
   async executeQuery(event) {
     event.preventDefault();
 
-    let source = this.sourceStore ? store : 'http://localhost:4200/turtle/' + this.source;
+    let source = this.sourceStore ? store : 'http://localhost:3000/turtle/' + this.source;
 
     const result = await myEngine.query(this.custom_query, {
       sources: [source],
