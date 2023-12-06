@@ -1,3 +1,5 @@
-<button type="button" {{on "click" this.executeQuery}}>{{@model.description}}</button>
+{{#each @model.queries as |query|}}
+  <button type="button" {{on "click" (fn this.executeQuery query)}}>{{query.description}}</button>
+{{/each}}
 
 {{outlet}}

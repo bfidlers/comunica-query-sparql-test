@@ -18,9 +18,9 @@ export default class DataController extends Controller {
   }
 
   @action
-  async executeQuery() {
-    const bindingsStream = await myEngine.queryBindings(this.model.query, {
-      sources: [this.model.source],
+  async executeQuery(query) {
+    const bindingsStream = await myEngine.queryBindings(query.query, {
+      sources: [query.source],
     });
 
     this.outputBindings(bindingsStream);
