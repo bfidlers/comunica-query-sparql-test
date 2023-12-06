@@ -16,12 +16,20 @@ export default class IndexController extends Controller {
   @tracked ask_result = '';
   @tracked last_query = '';
 
+  @tracked css_class = 'collapsible';
+
   async updateOutput(value) {
     this.previous_output = this.output;
     this.output = value;
   }
 
   // select queries
+
+  @action
+  async toggleSelectSection() {
+    this.toggleProperty('isShowingBody');
+    this.css_class = this.css_class == 'collapsible' ? 'open' : 'collapsible';
+  }
 
   @action
   async outputBindings(stream) {

@@ -3,8 +3,10 @@
 <p>This is a simple test page to try different uses of the comunica query-sparql module in ember.</p>
 <p>Below you can find different functionalities to test.</p>
 
-<h2>SPARQL SELECT queries</h2>
-<SelectQueries @streamOutput={{this.outputBindings}}/>
+<h2><button class={{this.css_class}} {{on "click" this.toggleSelectSection}}>SPARQL SELECT queries <i class="arrow"></i></button></h2>
+{{#if this.isShowingBody}}
+  <SelectQueries @streamOutput={{this.outputBindings}}/>
+{{/if}}
 
 <h2>SPARQL CONSTRUCT queries</h2>
 
