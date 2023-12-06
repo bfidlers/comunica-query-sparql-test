@@ -2,4 +2,15 @@
   <button type="button" {{on "click" (fn this.executeQuery query)}}>{{query.description}}</button>
 {{/each}}
 
+<h2>Last executed query</h2>
+
+<pre>{{this.last_query}}</pre>
+
+<Split
+  @title_left="Output"
+  @contents_left={{this.output}}
+  @title_right="Expected Output"
+  @contents_right={{this.expected_output}}
+/>
+
 {{outlet}}
