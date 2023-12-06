@@ -37,10 +37,7 @@ export default class IndexController extends Controller {
       ?s ?p ?o.
     }`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        // { type: 'file', value: 'http://localhost:4200/turtle/data.ttl' },
-        { type: 'file', value: 'http://localhost:3000/turtle/data.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/data.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -54,9 +51,7 @@ export default class IndexController extends Controller {
     }
     LIMIT 2`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/data.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/data.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -71,9 +66,7 @@ export default class IndexController extends Controller {
     ORDER BY ?s
     LIMIT 5`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/data.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/data.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -89,9 +82,7 @@ export default class IndexController extends Controller {
     LIMIT 5
     OFFSET 2`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/data.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/data.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -107,9 +98,7 @@ export default class IndexController extends Controller {
     }
     GROUP BY ?category`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/expenses.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/expenses.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -133,9 +122,7 @@ export default class IndexController extends Controller {
     }
     GROUP BY ?category`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/expenses.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/expenses.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -157,9 +144,7 @@ export default class IndexController extends Controller {
       BIND(year(?died) - year(?born) AS ?ageInYears).
     }`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/persons.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/persons.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -176,9 +161,7 @@ export default class IndexController extends Controller {
           ext:deathdate ?died;
     } `;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/persons.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/persons.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -224,9 +207,7 @@ export default class IndexController extends Controller {
       ?s ?p ?o
     }`;
     const hasMatches = await myEngine.queryBoolean(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/persons.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/persons.ttl'],
     });
 
     this.ask_result = hasMatches;
@@ -240,9 +221,7 @@ export default class IndexController extends Controller {
       ?s ext:name "Jimmy"
     }`;
     const hasMatches = await myEngine.queryBoolean(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/persons.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/persons.ttl'],
     });
 
     this.ask_result = hasMatches;
@@ -256,9 +235,7 @@ export default class IndexController extends Controller {
       ?s ext:name "Walter"
     }`;
     const hasMatches = await myEngine.queryBoolean(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/persons.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/persons.ttl'],
     });
 
     this.ask_result = hasMatches;
@@ -346,7 +323,7 @@ export default class IndexController extends Controller {
       { ?s ?p ?o }
     `;
     await myEngine.queryVoid(this.last_query, {
-      sources: ['http://localhost:4200/turtle/persons.ttl'],
+      sources: ['http://localhost:3000/turtle/persons.ttl'],
       destination: store,
     });
 
@@ -503,9 +480,7 @@ export default class IndexController extends Controller {
     }
     LIMIT 10`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/people.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -521,9 +496,7 @@ export default class IndexController extends Controller {
     }
     LIMIT 10`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/people.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -541,9 +514,7 @@ export default class IndexController extends Controller {
     }
     LIMIT 10`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/people.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -561,9 +532,7 @@ export default class IndexController extends Controller {
     }
     LIMIT 10`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/people.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -578,9 +547,7 @@ export default class IndexController extends Controller {
     }
     LIMIT 10`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/people.ttl'],
     });
     this.outputBindings(bindingsStream);
   }
@@ -597,9 +564,7 @@ export default class IndexController extends Controller {
     }
     LIMIT 10`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/people.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -618,9 +583,7 @@ export default class IndexController extends Controller {
     }
     LIMIT 10`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/people.ttl'],
     });
 
     this.outputBindings(bindingsStream);
@@ -637,9 +600,7 @@ export default class IndexController extends Controller {
     }
     LIMIT 10`;
     const bindingsStream = await myEngine.queryBindings(this.last_query, {
-      sources: [
-        { type: 'file', value: 'http://localhost:4200/turtle/people.ttl' },
-      ],
+      sources: ['http://localhost:3000/turtle/people.ttl'],
     });
     this.outputBindings(bindingsStream);
   }
