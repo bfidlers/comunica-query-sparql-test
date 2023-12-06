@@ -10,4 +10,5 @@ Router.map(function () {
   this.route('custom-query');
   this.route('data');
   this.route('upload');
+  this.route('test');
 });

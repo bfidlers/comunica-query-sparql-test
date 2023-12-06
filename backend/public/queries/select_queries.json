@@ -1,0 +1,95 @@
+{
+    "name": "query_all",
+    "description": "Simple query to file",
+    "query" : "SELECT ?s ?p ?o WHERE {?s ?p ?o.}",
+    "source": "http://localhost:3000/turtle/data.ttl",
+    "expected_output" : [{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/checkboxValue",
+        "o": "\"1\"^^http://www.w3.org/2001/XMLSchema#boolean"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/switchValue",
+        "o": "\"1\"^^http://www.w3.org/2001/XMLSchema#boolean"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/conceptSchemeMultiSelectCheckboxesValue",
+        "o": "http://example-concept-schemes/concepts/foo"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/conceptSchemeMultiSelectCheckboxesValue",
+        "o": "http://example-concept-schemes/concepts/bar"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/conceptSchemeMultiSelectCheckboxesValue",
+        "o": "http://example-concept-schemes/concepts/corge"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/radioButtonsValue",
+        "o": "http://example-concept-schemes/concepts/qux"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/inputValue",
+        "o": "\"Simple value\""
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/numericalInputValue",
+        "o": "\"42\"^^http://www.w3.org/2001/XMLSchema#integer"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/textAreaValue",
+        "o": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lorem sapien, pretium id nunc eu.\""
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/dateValue",
+        "o": "\"2022-12-06\"^^http://www.w3.org/2001/XMLSchema#date"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/datePickerValue",
+        "o": "\"2022-02-08\"^^http://www.w3.org/2001/XMLSchema#date"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/dateTimeValue",
+        "o": "\"2022-12-31T23:00:00.000Z\"^^http://www.w3.org/2001/XMLSchema#dateTime"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/conceptSchemeSelectorValue",
+        "o": "http://example-concept-schemes/concepts/corge"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/conceptSchemeMultiSelectorValue",
+        "o": "http://example-concept-schemes/concepts/bar"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/conceptSchemeMultiSelectorValue",
+        "o": "http://example-concept-schemes/concepts/quux"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://mu.semte.ch/vocabularies/ext/remoteUrlsValue",
+        "o": "http://data.lblod.info/remote-url/1"
+      },{
+        "s": "http://ember-submission-form-fields/source-node",
+        "p": "http://lblod.data.gift/vocabularies/besluit/taxRate",
+        "o": "http://data.lblod.info/tax-rates/1"
+      },{
+        "s": "http://data.lblod.info/remote-url/1",
+        "p": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "o": "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject"
+      },{
+        "s": "http://data.lblod.info/remote-url/1",
+        "p": "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#url",
+        "o": "\"https://lokaalbestuur.vlaanderen.be/loket-lokaal-bestuur\""
+      },{
+        "s": "http://data.lblod.info/remote-url/1",
+        "p": "http://redpencil.data.gift/vocabularies/http/requestHeader",
+        "o": "http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e"
+      },{
+        "s": "http://data.lblod.info/tax-rates/1",
+        "p": "http://schema.org/price",
+        "o": "\"123\"^^http://www.w3.org/2001/XMLSchema#integer"
+      },{
+        "s": "http://data.lblod.info/tax-rates/1",
+        "p": "http://schema.org/price",
+        "o": "\"456\"^^http://www.w3.org/2001/XMLSchema#integer"
+      }]
+}
