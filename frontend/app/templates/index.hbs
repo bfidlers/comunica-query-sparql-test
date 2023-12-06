@@ -59,6 +59,11 @@
 
 <pre>{{this.last_query}}</pre>
 
-<Output @output={{this.output}} @previous_output={{this.previous_output}}/>
+<Split
+  @title_left="Output"
+  @contents_left={{this.output}}
+  @title_right="Previous Output"
+  @contents_right={{this.previous_output}}
+/>
 
 {{outlet}}
