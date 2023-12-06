@@ -1,0 +1,7 @@
+{{#let (file-queue name="file" onFileAdded=this.uploadFile) as |queue|}}
+  <label>
+    Add a file here:
+    <input type="file" {{queue.selectFile}}>
+  </label>
+{{/let}}
+
