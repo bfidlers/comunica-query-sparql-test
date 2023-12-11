@@ -51,6 +51,16 @@ textarea {
 }
 
 .incorrect {
-  background-color: #e13b2c;
+  background-color: #e05043;
+  white-space: pre-wrap;
+}
+
+.red-text {
+  color: #e03728;
+  white-space: pre-wrap;
+}
+
+.green-text {
+  color: green;
   white-space: pre-wrap;
 }

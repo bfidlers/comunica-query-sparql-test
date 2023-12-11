@@ -10,9 +10,13 @@ export default class DataController extends Controller {
   @tracked output = '';
   @tracked expected_output = '';
 
+  @tracked query_executed = false;
+  @tracked query_result = '';
+
   @action
   async compareBindings(stream, expected) {
     let result = '';
+    let errors = false;
     const bindings = await stream.toArray();
     let i = 0;
     bindings.map((b) => {
@@ -21,6 +25,7 @@ export default class DataController extends Controller {
       if (b.toString() != expected_line) {
         this.output += `<div class="incorrect">${b.toString()}</div>`
         this.expected_output += `<div class="incorrect">${expected_line}</div>`
+        errors = true;
       }
       else {
         this.output += b.toString();
@@ -31,6 +36,10 @@ export default class DataController extends Controller {
     });
     result = result.slice(0, -2);
     console.log('"expected_output" : [\n' + result + ']');
+
+    this.query_result = errors
+      ? '<span class="red-text">Query resulted in an unexpected response, please check the output with the expected output below.</span>'
+      : '<span class="green-text">Query resulted in the expected outcome.</span>';
   }
 
   @action
@@ -41,5 +50,7 @@ export default class DataController extends Controller {
     });
 
     this.compareBindings(bindingsStream, query.expected_output);
+
+    this.query_executed = true;
   }
 }
