@@ -13,6 +13,14 @@ export default class DataController extends Controller {
   @tracked query_executed = false;
   @tracked query_result = '';
 
+  @tracked css_class = 'collapsible';
+
+  @action
+  async toggleBody() {
+    this.toggleProperty('isShowingBody');
+    this.css_class = this.css_class == 'collapsible' ? 'open' : 'collapsible';
+  }
+
   @action
   async compareBindings(stream, expected) {
     let result = '';
