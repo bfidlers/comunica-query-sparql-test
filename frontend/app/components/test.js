@@ -54,12 +54,40 @@ export default class TestComponent extends Component {
   @action
   async executeQuery(query) {
     this.last_query = this.jsonArrayToString(query.query);
-    const bindingsStream = await myEngine.queryBindings(this.last_query, {
+
+    const result = await myEngine.query(this.last_query, {
       sources: [query.source],
     });
 
-    this.compareBindings(bindingsStream, query.expected_output);
-
+    const stream = await result.execute();
+    switch (result.resultType) {
+      case 'bindings': {
+        // query.expected_output = '';
+        this.compareBindings(stream, query.expected_output);
+        break;
+      }
+      case 'quads': {
+        let output = '';
+        const bindings = await stream.toArray();
+        bindings.map((quad) => {
+          output += '{\n';
+          output += 's:' + quad.subject.value + '\n';
+          output += 'p:' + quad.predicate.value + '\n';
+          output += 'o:' + quad.object.value + '\n';
+          output += 'g:' + quad.graph.value + '\n';
+          output += '}\n';
+        });
+        this.updateOutput(output);
+        break;
+      }
+      case 'boolean':
+        this.updateOutput(`Result of the query is: ${stream}`);
+        break;
+      case 'void':
+        this.updateOutput(
+          `Data was successfully written, store size is now: ${store.size}`,
+        );
+    }
     this.query_executed = true;
   }
 
