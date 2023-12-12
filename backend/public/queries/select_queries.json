@@ -96,6 +96,198 @@
                 "p": "http://schema.org/price",
                 "o": "\"456\"^^http://www.w3.org/2001/XMLSchema#integer"
               }]
+        },
+        {
+            "name": "query_limit",
+            "description": "Simple query to file with limit",
+            "query" : ["SELECT ?s ?p ?o WHERE {",
+                        "  ?s ?p ?o.",
+                        "}",
+                        "LIMIT 2"
+                        ],
+            "source": "http://localhost:3000/turtle/data.ttl",
+            "expected_output" : [
+                {
+                  "s": "http://ember-submission-form-fields/source-node",
+                  "p": "http://mu.semte.ch/vocabularies/ext/checkboxValue",
+                  "o": "\"1\"^^http://www.w3.org/2001/XMLSchema#boolean"
+                },
+                {
+                  "s": "http://ember-submission-form-fields/source-node",
+                  "p": "http://mu.semte.ch/vocabularies/ext/switchValue",
+                  "o": "\"1\"^^http://www.w3.org/2001/XMLSchema#boolean"
+                }]
+        },
+        {
+            "name": "query_ordered",
+            "description": "Simple query to file with order",
+            "query" : ["SELECT ?s ?p ?o WHERE {",
+                        "  ?s ?p ?o.",
+                        "}",
+                        "ORDER BY ?s",
+                        "LIMIT 2"
+                        ],
+            "source": "http://localhost:3000/turtle/data.ttl",
+            "expected_output" : [
+                {
+                  "s": "http://data.lblod.info/remote-url/1",
+                  "p": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+                  "o": "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject"
+                },
+                {
+                  "s": "http://data.lblod.info/remote-url/1",
+                  "p": "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#url",
+                  "o": "\"https://lokaalbestuur.vlaanderen.be/loket-lokaal-bestuur\""
+                }]
+        },
+        {
+            "name": "query_offset",
+            "description": "Simple query to file with offset",
+            "query" : ["SELECT ?s ?p ?o WHERE {",
+                        "  ?s ?p ?o.",
+                        "}",
+                        "ORDER BY ?s",
+                        "LIMIT 2",
+                        "OFFSET 2"
+                        ],
+            "source": "http://localhost:3000/turtle/data.ttl",
+            "expected_output" : [
+                {
+                  "s": "http://data.lblod.info/remote-url/1",
+                  "p": "http://redpencil.data.gift/vocabularies/http/requestHeader",
+                  "o": "http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e"
+                },
+                {
+                  "s": "http://data.lblod.info/tax-rates/1",
+                  "p": "http://schema.org/price",
+                  "o": "\"123\"^^http://www.w3.org/2001/XMLSchema#integer"
+                }]
+        },
+        {
+            "name": "query_group_aggregates",
+            "description": "Simple query to file with group aggregates",
+            "query" : ["SELECT ?category (sum(?price) AS ?total)",
+                        "WHERE {",
+                        "   ?expense <http://mu.semte.ch/vocabularies/ext/category> ?category ;",
+                        "            <http://mu.semte.ch/vocabularies/ext/amount> ?price .",
+                        "}",
+                        "GROUP BY ?category"
+                        ],
+            "source": "http://localhost:3000/turtle/expenses.ttl",
+            "expected_output" : [
+                {
+                  "category": "\"Miscellaneous\"",
+                  "total": "\"190\"^^http://www.w3.org/2001/XMLSchema#decimal"
+                },
+                {
+                  "category": "\"Groceries\"",
+                  "total": "\"140\"^^http://www.w3.org/2001/XMLSchema#decimal"
+                }]
+        },
+        {
+            "name": "query_nested",
+            "description": "Simple nested query to file",
+            "query" : ["SELECT ?category (sum(?price) AS ?total)",
+                        "WHERE {",
+                        "   ?expense <http://mu.semte.ch/vocabularies/ext/category> ?category ;",
+                        "            <http://mu.semte.ch/vocabularies/ext/amount> ?price .",
+                        "   {",
+                        "       SELECT DISTINCT ?category",
+                        "       WHERE {",
+                        "           <http://mu.semte.ch/sessions/3a8c852e-888a-11ee-896a-0242ac14000a> <http://mu.semte.ch/vocabularies/session/account> ?account .",
+                        "           ?account <http://mu.semte.ch/vocabularies/ext/expense> ?expense .",
+                        "           ?expense <http://mu.semte.ch/vocabularies/ext/category> ?category .",
+                        "       }",
+                        "   }",
+                        "}",
+                        "GROUP BY ?category"
+                        ],
+            "source": "http://localhost:3000/turtle/expenses.ttl",
+            "expected_output" : [
+                {
+                  "category": "\"Miscellaneous\"",
+                  "total": "\"190\"^^http://www.w3.org/2001/XMLSchema#decimal"
+                },
+                {
+                  "category": "\"Groceries\"",
+                  "total": "\"140\"^^http://www.w3.org/2001/XMLSchema#decimal"
+                }]
+        },
+        {
+            "name": "query_bind",
+            "description": "Simple query to file with binds",
+            "query" : ["PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>",
+                        "SELECT ?name ?born ?died ?n1 ?n2 ?n3 ?ageInDays ?ageInDays2 ?ageInYears WHERE {",
+                        "  ?id ext:name ?name;",
+                        "      ext:birthdate ?born;",
+                        "      ext:deathdate ?died;",
+                        "      ext:n1 ?n1;",
+                        "      ext:n2 ?n2.",
+                        "  BIND(?n1 - ?n2 AS ?n3).",
+                        "  BIND(?died - ?born AS ?ageInDays).",
+                        "  BIND(day(?died) - day(?born) AS ?ageInDays2).",
+                        "  BIND(year(?died) - year(?born) AS ?ageInYears).",
+                        "}"
+                        ],
+            "source": "http://localhost:3000/turtle/person.ttl",
+            "expected_output" : [
+                {
+                  "n1": "\"10\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "n2": "\"5\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "died": "\"2050-12-06\"^^http://www.w3.org/2001/XMLSchema#date",
+                  "n3": "\"5\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "born": "\"2022-12-06\"^^http://www.w3.org/2001/XMLSchema#date",
+                  "name": "\"Jimmy\"",
+                  "ageInYears": "\"28\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "ageInDays2": "\"0\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "ageInDays": "\"P10227D\"^^http://www.w3.org/2001/XMLSchema#dayTimeDuration"
+                },
+                {
+                  "n1": "\"5\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "n2": "\"10\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "died": "\"2022-12-07\"^^http://www.w3.org/2001/XMLSchema#date",
+                  "n3": "\"-5\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "born": "\"2022-12-06\"^^http://www.w3.org/2001/XMLSchema#date",
+                  "name": "\"Willy\"",
+                  "ageInYears": "\"0\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "ageInDays2": "\"1\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "ageInDays": "\"P1D\"^^http://www.w3.org/2001/XMLSchema#dayTimeDuration"
+                },
+                {
+                  "n1": "\"100\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "n2": "\"8980\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "died": "\"2023-10-07\"^^http://www.w3.org/2001/XMLSchema#date",
+                  "n3": "\"-8880\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "born": "\"2002-09-06\"^^http://www.w3.org/2001/XMLSchema#date",
+                  "name": "\"Jef\"",
+                  "ageInYears": "\"21\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "ageInDays2": "\"1\"^^http://www.w3.org/2001/XMLSchema#integer",
+                  "ageInDays": "\"P7701D\"^^http://www.w3.org/2001/XMLSchema#dayTimeDuration"
+                }]
+        },
+        {
+            "name": "query_values",
+            "description": "Simple query to file with values",
+            "query" : ["PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>",
+                        "SELECT ?name ?born ?died WHERE {",
+                        "  VALUES ?id {ext:person1 ext:person2}",
+                        "  ?id ext:name ?name;",
+                        "      ext:birthdate ?born;",
+                        "      ext:deathdate ?died;",
+                        "}"
+                        ],
+            "source": "http://localhost:3000/turtle/person.ttl",
+            "expected_output" : [
+                {
+                  "died": "\"2050-12-06\"^^http://www.w3.org/2001/XMLSchema#date",
+                  "name": "\"Jimmy\"",
+                  "born": "\"2022-12-06\"^^http://www.w3.org/2001/XMLSchema#date"
+                },
+                {
+                  "died": "\"2022-12-07\"^^http://www.w3.org/2001/XMLSchema#date",
+                  "name": "\"Willy\"",
+                  "born": "\"2022-12-06\"^^http://www.w3.org/2001/XMLSchema#date"
+                }]
         }
     ]
 }
