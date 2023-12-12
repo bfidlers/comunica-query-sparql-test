@@ -1,11 +1,11 @@
-import Controller from '@ember/controller';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { QueryEngine } from '@comunica/query-sparql';
 
 const myEngine = new QueryEngine();
 
-export default class DataController extends Controller {
+export default class TestComponent extends Component {
   @tracked last_query = '';
   @tracked output = '';
   @tracked expected_output = '';
@@ -14,10 +14,11 @@ export default class DataController extends Controller {
   @tracked query_result = '';
 
   @tracked css_class = 'collapsible';
+  @tracked isShowingBody = false;
 
   @action
   async toggleBody() {
-    this.toggleProperty('isShowingBody');
+    this.isShowingBody = this.isShowingBody ? false : true;
     this.css_class = this.css_class == 'collapsible' ? 'open' : 'collapsible';
   }
 

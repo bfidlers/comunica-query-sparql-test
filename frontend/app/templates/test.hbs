@@ -1,23 +1,5 @@
 {{#each @model.queries as |query|}}
-  <button type="button" {{on "click" (fn this.executeQuery query)}}>{{query.description}}</button>
+  <Test @query={{query}}/>
 {{/each}}
-
-{{#if this.query_executed}}
-  <h2><button class={{this.css_class}} {{on "click" this.toggleBody}}>Result <i class="arrow"></i></button></h2>
-  {{#if this.isShowingBody}}
-    <pre><strong>{{{this.query_result}}}</strong></pre>
-
-    <h2>Executed query</h2>
-
-    <pre>{{this.last_query}}</pre>
-
-    <Split
-      @title_left="Output"
-      @contents_left={{this.output}}
-      @title_right="Expected Output"
-      @contents_right={{this.expected_output}}
-    />
-  {{/if}}
-{{/if}}
 
 {{outlet}}
