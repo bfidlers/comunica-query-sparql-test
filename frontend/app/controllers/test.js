@@ -52,13 +52,22 @@ export default class DataController extends Controller {
 
   @action
   async executeQuery(query) {
-    this.last_query = query.query;
-    const bindingsStream = await myEngine.queryBindings(query.query, {
+    this.last_query = this.jsonArrayToString(query.query);
+    const bindingsStream = await myEngine.queryBindings(this.last_query, {
       sources: [query.source],
     });
 
     this.compareBindings(bindingsStream, query.expected_output);
 
     this.query_executed = true;
+  }
+
+  jsonArrayToString(array) {
+    let result = '';
+    for (const elem of array) {
+      result += elem + '\n';
+    }
+    result = result.slice(0, -1);
+    return result;
   }
 }
