@@ -6,6 +6,11 @@ import { QueryEngine } from '@comunica/query-sparql';
 const myEngine = new QueryEngine();
 
 export default class TestComponent extends Component {
+  constructor() {
+    super(...arguments);
+    this.executeQuery(this.args.query);
+  }
+
   @tracked last_query = '';
   @tracked output = '';
   @tracked expected_output = '';

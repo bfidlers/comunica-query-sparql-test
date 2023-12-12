@@ -1,5 +1,10 @@
-{{#each @model.queries as |query|}}
-  <Test @query={{query}}/>
-{{/each}}
+<button type="button" {{on "click" this.runTestSuite}}>Run tests</button>
+{{#if this.testInitiated}}
+
+  {{#each @model.queries as |query|}}
+    <Test @query={{query}}/>
+  {{/each}}
+
+{{/if}}
 
 {{outlet}}
