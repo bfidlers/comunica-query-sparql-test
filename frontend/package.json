@@ -81,6 +81,8 @@
   },
   "dependencies": {
     "@comunica/query-sparql": "^2.10.0",
-    "n3": "^1.17.2"
+    "forking-store": "^2.1.1",
+    "n3": "^1.17.2",
+    "url": "^0.11.3"
   }
 }

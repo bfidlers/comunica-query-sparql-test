@@ -2,10 +2,12 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { QueryEngine } from '@comunica/query-sparql';
-import N3 from 'n3';
+//import N3 from 'n3';
+import ForkingStore from 'forking-store';
 
 const myEngine = new QueryEngine();
-const store = new N3.Store();
+//const store = new N3.Store();
+const store = new ForkingStore();
 
 const peopleFile = 'http://localhost:3000/turtle/people.ttl';
 const personFile = 'http://localhost:3000/turtle/person.ttl';
